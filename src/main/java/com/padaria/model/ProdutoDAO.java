@@ -1,6 +1,6 @@
-package org.gabz.model;
+package com.padaria.model;
 
-import org.gabz.controller.ConnectionFactory;
+import com.padaria.controller.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;

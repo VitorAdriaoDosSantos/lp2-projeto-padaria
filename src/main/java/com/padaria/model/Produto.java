@@ -1,4 +1,4 @@
-package org.gabz.model;
+package com.padaria.model;
 
 public class Produto {
     private int id;

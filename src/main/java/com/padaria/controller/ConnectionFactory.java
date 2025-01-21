@@ -1,4 +1,4 @@
-package org.gabz.controller;
+package com.padaria.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
