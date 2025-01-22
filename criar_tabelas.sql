@@ -1,3 +1,5 @@
+CREATE DATABASE padaria;
+
 USE padaria;
 
 -- Excluir tabelas existentes
