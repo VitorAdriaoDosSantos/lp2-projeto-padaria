@@ -1,46 +1,28 @@
 package com.padaria;
 
-import com.padaria.model.Produto;
-import com.padaria.model.ProdutoDAO;
+import com.padaria.view.TabelaController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
+
+import java.util.Objects;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-        // Cria uma lista observável de produtos a partir dos produtos do banco de dados
-        ObservableList<Produto> produtos = FXCollections.observableArrayList(new ProdutoDAO().read());
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Tabela.fxml"));
 
-
-        TableView<Produto> tableView = new TableView<>(produtos);
-        tableView.getColumns().addAll(
-                createColumn("ID", "id", 50),
-                createColumn("Nome", "nome", 100),
-                createColumn("Categoria", "categoria", 100),
-                createColumn("Preço", "preco", 50),
-                createColumn("QTD", "quantidade", 50),
-                createColumn("Validade", "validade", 100)
-        );
-
-        StackPane root = new StackPane(tableView);
-        primaryStage.setScene(new Scene(root, 640, 480));
-        primaryStage.setTitle("Sistema da Padaria");
-        primaryStage.show();
-    }
-
-    private <T> TableColumn<Produto, T> createColumn(String title, String property, int width) {
-        TableColumn<Produto, T> column = new TableColumn<>(title);
-        column.setCellValueFactory(new PropertyValueFactory<>(property));
-        column.setPrefWidth(width);
-        return column;
+            primaryStage.getIcons().add(new Image(getClass().getResource("/icon.png").toString()));
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setTitle("Sistema de Padaria");
+            primaryStage.show();
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar a tela principal: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
