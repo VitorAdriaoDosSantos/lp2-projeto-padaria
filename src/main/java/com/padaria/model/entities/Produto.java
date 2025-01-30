@@ -1,4 +1,6 @@
-package com.padaria.model;
+package com.padaria.model.entities;
+
+import java.time.LocalDate;
 
 public class Produto {
     private int id;
@@ -6,11 +8,11 @@ public class Produto {
     private String categoria;
     private double preco;
     private int quantidade;
-    private String validade;
+    private LocalDate validade;
 
     public Produto() {}
 
-    public Produto(String nome, String categoria, double preco, int quantidade, String validade) {
+    public Produto(String nome, String categoria, double preco, int quantidade, LocalDate validade) {
         this.nome = nome;
         this.categoria = categoria;
         this.preco = preco;
@@ -70,11 +72,11 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public String getValidade() {
+    public LocalDate getValidade() {
         return validade;
     }
 
-    public void setValidade(String validade) {
+    public void setValidade(LocalDate validade) {
         this.validade = validade;
     }
 }
