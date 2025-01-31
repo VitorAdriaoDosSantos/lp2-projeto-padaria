@@ -17,13 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.padaria.controller.ApplicationController">
+<AnchorPane prefHeight="720.0" prefWidth="960.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.padaria.controller.ApplicationController">
     <children>
         <TabPane prefHeight="720" prefWidth="960" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab text="Produtos" xmlns:fx="http://javafx.com/fxml">
                     <content>
-                        <SplitPane dividerPositions="0.25" prefHeight="160.0" prefWidth="200.0">
+                        <SplitPane dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0">
                             <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                     <children>

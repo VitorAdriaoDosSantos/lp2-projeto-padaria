@@ -19,7 +19,7 @@ public class ProdutoDaoJDBC implements ProdutoDao{
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO produto (nome, categoria, preco, quantidade, validade) VALUES (?, ?, ?, ?, ?)",
+                    "INSERT INTO produtos (nome, categoria, preco, quantidade, validade) VALUES (?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
             st.setString(1, produto.getNome());
@@ -51,7 +51,7 @@ public class ProdutoDaoJDBC implements ProdutoDao{
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "UPDATE produto SET nome = ?, categoria = ?, preco = ?, quantidade = ?, validade = ? WHERE id = ?"
+                    "UPDATE produtos SET nome = ?, categoria = ?, preco = ?, quantidade = ?, validade = ? WHERE id = ?"
             );
             st.setString(1, produto.getNome());
             st.setString(2, produto.getCategoria());
@@ -71,7 +71,7 @@ public class ProdutoDaoJDBC implements ProdutoDao{
     public void removerPorId(int id) {
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement("DELETE FROM produto WHERE id = ?");
+            st = conn.prepareStatement("DELETE FROM produtos WHERE id = ?");
             st.setInt(1, id);
             st.executeUpdate();
         } catch(SQLException e) {
@@ -86,7 +86,7 @@ public class ProdutoDaoJDBC implements ProdutoDao{
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = conn.prepareStatement("SELECT * FROM produto WHERE id = ?");
+            st = conn.prepareStatement("SELECT * FROM produtos WHERE id = ?");
             st.setInt(1, id);
 
             rs = st.executeQuery();
@@ -117,7 +117,7 @@ public class ProdutoDaoJDBC implements ProdutoDao{
         ResultSet rs = null;
 
         try {
-            st = conn.prepareStatement("SELECT * FROM produto");
+            st = conn.prepareStatement("SELECT * FROM produtos");
             rs = st.executeQuery();
 
             List<Produto> produtos = new ArrayList<>();
