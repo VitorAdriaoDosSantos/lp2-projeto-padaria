@@ -5,13 +5,15 @@ import com.padaria.model.entities.Produto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class ApplicationController {
 
@@ -87,5 +89,64 @@ public class ApplicationController {
         }
     }
 
+    @FXML
+    private void atualizarProduto() {
+        try {
+            Produto produto = new Produto();
+            produto.setId(Integer.parseInt(textId.getText()));
+            produto.setNome(textNome.getText());
+            produto.setCategoria(textCategoria.getText());
+            produto.setPreco(Double.parseDouble(textPreco.getText()));
+            produto.setQuantidade(Integer.parseInt(textQtd.getText()));
+            produto.setValidade(LocalDate.parse(textValidade.getText()));
+            DaoFactory.createProdutoDao().atualizar(produto);
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar o produto: " + e.getMessage());
+        } finally {
+            carregarTabela();
+        }
+    }
 
+    @FXML
+    private void adicionarProduto() {
+        try {
+            Produto produto = new Produto();
+            produto.setNome(textNome.getText());
+            produto.setCategoria(textCategoria.getText());
+            produto.setPreco(Double.parseDouble(textPreco.getText()));
+            produto.setQuantidade(Integer.parseInt(textQtd.getText()));
+            produto.setValidade(LocalDate.parse(textValidade.getText()));
+            DaoFactory.createProdutoDao().inserir(produto);
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar o produto: " + e.getMessage());
+        } finally {
+            carregarTabela();
+        }
+    }
+
+    @FXML
+    private void removerProduto() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmação de Remoção");
+        alert.setHeaderText("Remover Produto");
+        alert.setContentText("Deseja realmente remover o produto?");
+
+        ButtonType buttonTypeSim = new ButtonType("Sim");
+        ButtonType buttonTypeNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeSim, buttonTypeNao);
+
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == buttonTypeSim) {
+            try {
+                int id = Integer.parseInt(textId.getText());
+                DaoFactory.createProdutoDao().removerPorId(id);
+                carregarTabela();
+            } catch (Exception e) {
+                System.out.println("Erro ao remover o produto: " + e.getMessage());
+            }
+        }
+        
+    }
 }

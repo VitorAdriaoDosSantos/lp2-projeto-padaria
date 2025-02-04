@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="anchor-pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.padaria.controller.HomeController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Forno Mágico">
+               <font>
+                  <Font name="Arial Black" size="48.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="56.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/oven.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="buttonEntrar" alignment="CENTER" mnemonicParsing="false" onAction="#Entrar" text="Entrar">
+               <VBox.margin>
+                  <Insets top="100.0" />
+               </VBox.margin></Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
