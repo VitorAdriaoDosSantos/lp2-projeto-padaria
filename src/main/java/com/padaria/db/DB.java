@@ -9,7 +9,7 @@ public class DB {
     private static Connection conn = null;
     private static final String url = "jdbc:mysql://localhost:3306/padaria";
     private static final String user = "root";
-    private static final String password = "6930";
+    private static final String password = "vitor15458512";
 
     /**
      * Obtém a conexão com o banco de dados.
