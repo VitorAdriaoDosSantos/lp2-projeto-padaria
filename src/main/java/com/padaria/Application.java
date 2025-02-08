@@ -13,7 +13,7 @@ public class Application extends javafx.application.Application {
             Parent root = FXMLLoader.load(getClass().getResource("/view/home.fxml"));
             primaryStage.getIcons().add(new Image(getClass().getResource("/images/icon.png").toString()));
             primaryStage.setScene(new Scene(root, 960, 720));
-            primaryStage.setResizable(false);
+            primaryStage.setResizable(true);
             primaryStage.setTitle("Forno Mágico");
             primaryStage.show();
         } catch (Exception e) {
