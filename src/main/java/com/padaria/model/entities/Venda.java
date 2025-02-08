@@ -1,12 +1,13 @@
 package com.padaria.model.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 public class Venda {
     private int id;
-    private LocalDate data;
+    private LocalDateTime data;
     private double valorTotal;
     private List<VendaProdutos> itens;
 
@@ -24,15 +25,16 @@ public class Venda {
         this.itens = itens;
     }
 
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 

@@ -97,7 +97,10 @@ public class ProdutoDaoJDBC implements ProdutoDao{
                 produto.setCategoria(rs.getString("categoria"));
                 produto.setPreco(rs.getDouble("preco"));
                 produto.setQuantidade(rs.getInt("quantidade"));
-                produto.setValidade(rs.getDate("validade").toLocalDate());
+                Date validadeDate = rs.getDate("validade");
+                if (validadeDate != null) {
+                    produto.setValidade(validadeDate.toLocalDate());
+                }
 
                 return produto;
             }

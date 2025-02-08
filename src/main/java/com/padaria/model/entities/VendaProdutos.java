@@ -6,6 +6,7 @@ public class VendaProdutos {
     private int idProduto;
     private int quantidade;
     private double subTotal;
+    private Produto produto;
 
     public VendaProdutos() {}
 
@@ -21,16 +22,24 @@ public class VendaProdutos {
         return idVenda;
     }
 
-    public void setIdVenda(int idVenda) {
-        this.idVenda = idVenda;
-    }
-
     public int getIdProduto() {
         return idProduto;
     }
 
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
+    }
+
+    public void setIdVenda(int idVenda) {
+        this.idVenda = idVenda;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public int getQuantidade() {

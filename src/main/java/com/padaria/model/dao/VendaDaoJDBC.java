@@ -2,6 +2,7 @@ package com.padaria.model.dao;
 
 import com.padaria.db.DB;
 import com.padaria.model.entities.Venda;
+import com.padaria.model.entities.VendaProdutos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,18 +21,45 @@ public class VendaDaoJDBC implements VendaDao {
 
     @Override
     public List<Venda> listaVendas() {
-        PreparedStatement st = null;
-        ResultSet rs = null;
+        PreparedStatement stVendas = null;
+        ResultSet rsVendas = null;
         List<Venda> vendas = new ArrayList<>();
-        String sql = "select * from vendas order by data_hora desc";
+        String sqlVendas = "select * from vendas order by data_hora desc";
+
         try {
-            st = conn.prepareStatement(sql);
-            rs = st.executeQuery();
-            while (rs.next()) {
+            stVendas = conn.prepareStatement(sqlVendas);
+            rsVendas = stVendas.executeQuery();
+            while (rsVendas.next()) {
                 Venda venda = new Venda();
-                venda.setId(rs.getInt("id"));
-                venda.setData(rs.getDate("data_hora").toLocalDate());
-                venda.setValorTotal(rs.getDouble("total"));
+                venda.setId(rsVendas.getInt("id"));
+                venda.setData(rsVendas.getTimestamp("data_hora").toLocalDateTime());
+                venda.setValorTotal(rsVendas.getDouble("total"));
+
+                // Consulta separada para os itens da venda
+                PreparedStatement stItens = null;
+                ResultSet rsItens = null;
+                String sqlItens = "select * from venda_produtos where venda_id = ?";
+                try {
+                    stItens = conn.prepareStatement(sqlItens);
+                    stItens.setInt(1, venda.getId());
+                    rsItens = stItens.executeQuery();
+                    List<VendaProdutos> itens = new ArrayList<>();
+                    while (rsItens.next()) {
+                        VendaProdutos vendaProdutos = new VendaProdutos();
+                        vendaProdutos.setId(rsItens.getInt("id"));
+                        vendaProdutos.setIdVenda(rsItens.getInt("venda_id"));
+                        vendaProdutos.setIdProduto(rsItens.getInt("produto_id"));
+                        vendaProdutos.setQuantidade(rsItens.getInt("quantidade"));
+                        vendaProdutos.setSubTotal(rsItens.getDouble("subtotal"));
+                        vendaProdutos.setProduto(DaoFactory.createProdutoDao().buscarPorId(rsItens.getInt("produto_id")));
+                        itens.add(vendaProdutos);
+                    }
+                    venda.setItens(itens);
+                } finally {
+                    DB.closeResultSet(rsItens);
+                    DB.closeStatement(stItens);
+                }
+
                 vendas.add(venda);
             }
 
@@ -39,12 +67,13 @@ public class VendaDaoJDBC implements VendaDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DB.closeStatement(st);
-            DB.closeResultSet(rs);
+            DB.closeResultSet(rsVendas);
+            DB.closeStatement(stVendas);
         }
 
         return null;
     }
+
 
     @Override
     public void inserir(Venda venda) {
