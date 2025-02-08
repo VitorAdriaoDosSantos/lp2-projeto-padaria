@@ -24,7 +24,6 @@ public class HomeController {
             System.out.println("Erro ao carregar a tela de administração: " + e.getMessage());
         }
     }
-
     @FXML
     public void handleButtonCaixa() {
         try {
