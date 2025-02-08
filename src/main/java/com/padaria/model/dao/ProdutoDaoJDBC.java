@@ -61,7 +61,7 @@ public class ProdutoDaoJDBC implements ProdutoDao{
             st.setInt(6, produto.getId());
             st.executeUpdate();
         } catch(SQLException e) {
-            throw new RuntimeException("Erro ao atualizar um produto: " + e.getMessage());
+            throw new RuntimeException("Erro ao deletar um produto: " + e.getMessage());
         } finally {
             DB.closeStatement(st);
         }
