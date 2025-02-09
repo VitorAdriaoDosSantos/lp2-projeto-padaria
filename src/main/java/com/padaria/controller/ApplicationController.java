@@ -21,8 +21,11 @@ public class ApplicationController {
            tabProdutos.setContent(produtosLoader.load());
            FXMLLoader vendasLoader = new FXMLLoader(getClass().getResource("/view/vendas.fxml"));
            tabVendas.setContent(vendasLoader.load());
-           FXMLLoader relatoriosLoader = new FXMLLoader(getClass().getResource("/view/relatorios.fxml"));
-           tabRelatorios.setContent(relatoriosLoader.load());
+
+           // Temporariamente retirado
+           //FXMLLoader relatoriosLoader = new FXMLLoader(getClass().getResource("/view/relatorios.fxml"));
+           //tabRelatorios.setContent(relatoriosLoader.load());
+
        } catch (IOException e) {
            e.printStackTrace();
        }
