@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -13,99 +11,75 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-
-    <!-- Área central com um TabPane contendo diversos gráficos e indicadores -->
-    <center>
-        <TabPane prefWidth="620.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <!-- Aba Resumo -->
-                <Tab text="Resumo">
-                    <content>
-                        <VBox spacing="10" style="-fx-padding: 10;">
-                            <HBox alignment="CENTER" spacing="20">
-                                <Label style="-fx-font-size: 16px;" text="Vendas Totais: R$ 0,00" />
-                                <Label style="-fx-font-size: 16px;" text="Número de Clientes: 0" />
-                                <Label style="-fx-font-size: 16px;" text="Valor Médio da Compra: R$ 0,00" />
-                            </HBox>
-
-                            <!-- Gráfico de Linha para Média de Venda por Dia -->
-                            <LineChart prefHeight="300" prefWidth="600" title="Média de Venda por Dia">
-                                <xAxis>
-                                    <CategoryAxis label="Dia" />
-                                </xAxis>
-                                <yAxis>
-                                    <NumberAxis label="Valor (R$)" />
-                                </yAxis>
-                            </LineChart>
-
-                            <!-- Gráfico de Barras para Dias de Maior Venda -->
-                            <BarChart prefHeight="300" prefWidth="600" title="Dias de Maior Venda">
-                                <xAxis>
-                                    <CategoryAxis label="Dia" />
-                                </xAxis>
-                                <yAxis>
-                                    <NumberAxis label="Valor (R$)" />
-                                </yAxis>
-                            </BarChart>
-                        </VBox>
-                    </content>
-                </Tab>
-
-                <!-- Aba Vendas por Produto -->
-                <Tab text="Vendas por Produto">
-                    <content>
-                  <AnchorPane>
-                     <children>
-                               <!-- Gráfico de Barras para exibir vendas por produto -->
-                               <BarChart prefHeight="400" prefWidth="600" title="Vendas por Produto" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                   <xAxis>
-                                       <CategoryAxis label="Produto" />
-                                   </xAxis>
-                                   <yAxis>
-                                       <NumberAxis label="Quantidade/Valor" />
-                                   </yAxis>
-                               </BarChart>
-                     </children>
-                  </AnchorPane>
-                    </content>
-                </Tab>
-
-                <!-- Aba Vendas por Categoria -->
-                <Tab text="Vendas por Categoria">
-                    <content>
-                  <AnchorPane>
-                     <children>
-                               <!-- Gráfico de Pizza para exibir a distribuição das vendas por categoria -->
-                               <PieChart prefHeight="400" prefWidth="600" title="Vendas por Categoria" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-    </center>
-    <top>
-        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="400.0" spacing="10" style="-fx-padding: 20;" BorderPane.alignment="CENTER">
-            <children>
-                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Dashboard de Vendas" />
-                <HBox alignment="CENTER" spacing="10">
-                    <Label style="-fx-font-size: 14px;" text="Filtro:" />
-                    <ChoiceBox prefWidth="150.0">
-                        <items>
-                            <FXCollections fx:factory="observableArrayList" xmlns:fx="http://javafx.com/fxml/1">
-                                <String fx:value="Dia" />
-                                <String fx:value="Semana" />
-                                <String fx:value="Mês" />
-                            </FXCollections>
-                        </items>
-                    </ChoiceBox>
-                </HBox>
-            </children>
-        </VBox>
-    </top>
-
-</BorderPane>
+<TabPane prefHeight="720.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <tabs>
+      <Tab text="Resumo">
+         <content>
+            <VBox>
+               <children>
+                  <BorderPane>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <right>
+                        <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER" />
+                     </right>
+                     <left>
+                        <Label text="Teste de gráfico insano" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </left>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </BorderPane>
+                  <BarChart prefHeight="504.0" prefWidth="960.0">
+                     <xAxis>
+                        <CategoryAxis label="Tempo" side="BOTTOM" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis label="Valor (R$)" side="LEFT" />
+                     </yAxis>
+                  </BarChart>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab text="Vendas por Produto">
+         <content>
+            <AnchorPane>
+               <children>
+                  <BarChart prefHeight="400" prefWidth="600" title="Vendas por Produto" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <xAxis>
+                        <CategoryAxis label="Produto" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis label="Quantidade/Valor" />
+                     </yAxis>
+                  </BarChart>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Vendas por Categoria">
+         <content>
+            <AnchorPane>
+               <children>
+                  <PieChart prefHeight="400" prefWidth="600" title="Vendas por Categoria" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>
