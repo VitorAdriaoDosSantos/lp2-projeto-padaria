@@ -1,8 +1,14 @@
 /* styles.css */
 
 /* Estilo global da aplicação */
+
+@font-face {
+    font-family: "Nunito";
+    src: url("/fonts/Nunito-Regular.ttf");
+}
+
 .root {
-    -fx-font-family: 'Arial';
+    -fx-font-family: 'Nunito', sans-serif;
 }
 
 /* ---------- Componentes Gerais ---------- */

@@ -13,12 +13,12 @@
 }
 
 .button {
-    -fx-font-family: "Ultra";
-    -fx-font-size: 14px;
+    -fx-font-size: 18px;
     -fx-background-color: #e84a5f;
     -fx-text-fill: white;
     -fx-background-radius: 25;
-    -fx-padding: 10 20;
+    -fx-padding: 10;
+    -fx-font-family: "Ultra";
 }
 
 .button:hover {
