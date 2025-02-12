@@ -17,13 +17,13 @@ public class ApplicationController {
 
    public void initialize() {
        try {
-           FXMLLoader produtosLoader = new FXMLLoader(getClass().getResource("/view/produtos.fxml"));
+           FXMLLoader produtosLoader = new FXMLLoader(getClass().getResource("/views/produtos.fxml"));
            tabProdutos.setContent(produtosLoader.load());
-           FXMLLoader vendasLoader = new FXMLLoader(getClass().getResource("/view/vendas.fxml"));
+           FXMLLoader vendasLoader = new FXMLLoader(getClass().getResource("/views/vendas.fxml"));
            tabVendas.setContent(vendasLoader.load());
 
            // Temporariamente retirado
-           //FXMLLoader relatoriosLoader = new FXMLLoader(getClass().getResource("/view/relatorios.fxml"));
+           //FXMLLoader relatoriosLoader = new FXMLLoader(getClass().getResource("/views/relatorios.fxml"));
            //tabRelatorios.setContent(relatoriosLoader.load());
 
        } catch (IOException e) {

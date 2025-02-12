@@ -17,7 +17,7 @@ public class HomeController {
     @FXML
     public void handleButtonAdmin() {
         try {
-            Parent newView = FXMLLoader.load(getClass().getResource("/view/application.fxml"));
+            Parent newView = FXMLLoader.load(getClass().getResource("/views/application.fxml"));
             Stage stage = (Stage) buttonAdmin.getScene().getWindow();
             stage.setScene(new Scene(newView));
         } catch (Exception e) {
@@ -28,11 +28,12 @@ public class HomeController {
     @FXML
     public void handleButtonCaixa() {
         try {
-            Parent newView = FXMLLoader.load(getClass().getResource("/view/caixa.fxml"));
+            Parent newView = FXMLLoader.load(getClass().getResource("/views/caixa.fxml"));
             Stage stage = (Stage) buttonCaixa.getScene().getWindow();
             stage.setScene(new Scene(newView));
         } catch (Exception e) {
             System.out.println("Erro ao carregar a tela de caixa: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

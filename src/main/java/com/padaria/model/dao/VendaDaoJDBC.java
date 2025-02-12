@@ -4,10 +4,8 @@ import com.padaria.db.DB;
 import com.padaria.model.entities.Venda;
 import com.padaria.model.entities.VendaProdutos;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,11 +75,82 @@ public class VendaDaoJDBC implements VendaDao {
 
     @Override
     public void inserir(Venda venda) {
+        PreparedStatement stVenda = null;
+        PreparedStatement stItens = null;
+        PreparedStatement stEstoque = null;
+        ResultSet rs = null;
 
+        String sqlVenda = "INSERT INTO vendas (data_hora, total) VALUES (?, ?)";
+        String sqlItens = "INSERT INTO venda_produtos (venda_id, produto_id, quantidade, subtotal) VALUES (?, ?, ?, ?)";
+        String sqlEstoque = "UPDATE produtos SET quantidade = quantidade - ? WHERE id = ?";
+
+        try {
+            // Iniciar transação
+            conn.setAutoCommit(false);
+
+            // Inserir a venda
+            stVenda = conn.prepareStatement(sqlVenda, PreparedStatement.RETURN_GENERATED_KEYS);
+            stVenda.setTimestamp(1, Timestamp.valueOf(venda.getData()));
+            stVenda.setDouble(2, venda.getValorTotal());
+            int linhasAfetadas = stVenda.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                rs = stVenda.getGeneratedKeys();
+                if (rs.next()) {
+                    venda.setId(rs.getInt(1));
+                } else {
+                    throw new SQLException("Erro ao obter o ID da venda inserida.");
+                }
+            } else {
+                throw new SQLException("Erro ao inserir a venda.");
+            }
+
+            // Inserir os produtos associados à venda
+            stItens = conn.prepareStatement(sqlItens);
+            stEstoque = conn.prepareStatement(sqlEstoque);
+
+            for (VendaProdutos vp : venda.getItens()) {
+                // Inserindo os itens na tabela venda_produtos
+                stItens.setInt(1, venda.getId());
+                stItens.setInt(2, vp.getIdProduto());
+                stItens.setInt(3, vp.getQuantidade());
+                stItens.setDouble(4, vp.getSubTotal());
+                stItens.executeUpdate();
+
+                // Atualizando o estoque do produto
+                stEstoque.setInt(1, vp.getQuantidade());
+                stEstoque.setInt(2, vp.getIdProduto());
+                stEstoque.executeUpdate();
+            }
+
+            // Confirmar a transação
+            conn.commit();
+            System.out.println("Venda registrada com sucesso!");
+
+        } catch (SQLException e) {
+            try {
+                conn.rollback(); // Reverte todas as operações caso ocorra erro
+                System.out.println("Transação revertida devido a erro: " + e.getMessage());
+            } catch (SQLException rollbackEx) {
+                System.out.println("Erro ao reverter transação: " + rollbackEx.getMessage());
+            }
+            e.printStackTrace();
+
+        } finally {
+            // Restaurar auto-commit e fechar recursos
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DB.closeResultSet(rs);
+            DB.closeStatement(stVenda);
+            DB.closeStatement(stItens);
+            DB.closeStatement(stEstoque);
+        }
     }
 
-    @Override
-    public void deletar(Venda venda) {
 
-    }
+
+
 }

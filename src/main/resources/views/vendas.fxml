@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="960.0" spacing="10" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.padaria.controller.VendaController">
+<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="10" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.padaria.controller.VendaController">
    <children>
       <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="VENDAS" />
       <HBox alignment="CENTER" spacing="8.0">
@@ -36,7 +29,10 @@
          <children>
             <DatePicker fx:id="datePickerInicio" disable="true" promptText="De" />
             <DatePicker fx:id="datePickerFinal" disable="true" layoutX="383.0" layoutY="10.0" promptText="Até" />
-            <Button fx:id="buttonAplicar" mnemonicParsing="false" onAction="#handleButtonAplicar" text="Aplicar" />
+            <Button fx:id="buttonAplicar" mnemonicParsing="false" onAction="#handleButtonAplicar" text="Aplicar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </HBox>
       <HBox alignment="CENTER" spacing="20">
@@ -47,7 +43,7 @@
             <Label fx:id="labelValorMedio" layoutX="491.0" layoutY="10.0" style="-fx-font-size: 16px;" text="R$ 0,00" />
          </children>
       </HBox>
-      <TreeTableView fx:id="tabelaVendas">
+      <TreeTableView fx:id="tabelaVendas" prefHeight="530.0" prefWidth="1240.0">
         <columns>
           <TreeTableColumn fx:id="colunaId" prefWidth="46.0" text="ID" />
           <TreeTableColumn fx:id="colunaData" prefWidth="143.0" text="DATA" />

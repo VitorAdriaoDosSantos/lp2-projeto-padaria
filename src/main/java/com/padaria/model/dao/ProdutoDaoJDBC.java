@@ -26,7 +26,11 @@ public class ProdutoDaoJDBC implements ProdutoDao{
             st.setString(2, produto.getCategoria());
             st.setDouble(3, produto.getPreco());
             st.setInt(4, produto.getQuantidade());
-            st.setDate(5, Date.valueOf(produto.getValidade()));
+            if (produto.getValidade() == null) {
+                st.setNull(5, Types.DATE);
+            } else {
+                st.setDate(5, Date.valueOf(produto.getValidade()));
+            }
             int linhasAfetadas = st.executeUpdate();
 
             if (linhasAfetadas > 0) {

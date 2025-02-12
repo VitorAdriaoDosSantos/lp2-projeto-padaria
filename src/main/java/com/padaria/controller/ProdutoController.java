@@ -2,16 +2,15 @@ package com.padaria.controller;
 
 import com.padaria.model.dao.DaoFactory;
 import com.padaria.model.entities.Produto;
-import com.padaria.model.entities.Venda;
+import com.padaria.util.ConfirmationDialog;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-
-import java.time.LocalDate;
-import java.util.Optional;
+import javafx.stage.Stage;
 
 public class ProdutoController {
 
@@ -40,12 +39,13 @@ public class ProdutoController {
     @FXML
     private TextField textQtd;
     @FXML
-    private TextField textValidade;
+    private DatePicker dataValidade;
 
-
+    private Stage stage;
     @FXML
     public void initialize() {
         carregarTabela();
+        Platform.runLater(() -> stage = (Stage) tabelaProdutos.getScene().getWindow());
     }
 
     @FXML
@@ -64,12 +64,7 @@ public class ProdutoController {
         textCategoria.setText(produto.getCategoria());
         textPreco.setText(String.valueOf(produto.getPreco()));
         textQtd.setText(String.valueOf(produto.getQuantidade()));
-        LocalDate validade = produto.getValidade();
-        if (validade != null) {
-            textValidade.setText(validade.toString());
-        } else {
-            textValidade.setText("null");
-        }
+        dataValidade.setValue(produto.getValidade());
     }
 
     private void carregarTabela() {
@@ -93,54 +88,51 @@ public class ProdutoController {
 
     @FXML
     private void atualizarProduto() {
-        try {
-            Produto produto = new Produto();
-            produto.setId(Integer.parseInt(textId.getText()));
-            produto.setNome(textNome.getText());
-            produto.setCategoria(textCategoria.getText());
-            produto.setPreco(Double.parseDouble(textPreco.getText()));
-            produto.setQuantidade(Integer.parseInt(textQtd.getText()));
-            produto.setValidade(LocalDate.parse(textValidade.getText()));
-            DaoFactory.createProdutoDao().atualizar(produto);
-        } catch (Exception e) {
-            System.out.println("Erro ao deletar o produto: " + e.getMessage());
-        } finally {
-            carregarTabela();
+        boolean confimacao = ConfirmationDialog.show(stage, "Tem certeza que deseja atualizar o produto?");
+        if (confimacao) {
+            try {
+                Produto produto = new Produto();
+                produto.setId(Integer.parseInt(textId.getText()));
+                produto.setNome(textNome.getText());
+                produto.setCategoria(textCategoria.getText());
+                produto.setPreco(Double.parseDouble(textPreco.getText()));
+                produto.setQuantidade(Integer.parseInt(textQtd.getText()));
+                produto.setValidade(dataValidade.getValue());
+                DaoFactory.createProdutoDao().atualizar(produto);
+            } catch (Exception e) {
+                System.out.println("Erro ao deletar o produto: " + e.getMessage());
+            } finally {
+                carregarTabela();
+            }
         }
     }
 
     @FXML
     private void adicionarProduto() {
-        try {
-            Produto produto = new Produto();
-            produto.setNome(textNome.getText());
-            produto.setCategoria(textCategoria.getText());
-            produto.setPreco(Double.parseDouble(textPreco.getText()));
-            produto.setQuantidade(Integer.parseInt(textQtd.getText()));
-            produto.setValidade(LocalDate.parse(textValidade.getText()));
-            DaoFactory.createProdutoDao().inserir(produto);
-        } catch (Exception e) {
-            System.out.println("Erro ao adicionar o produto: " + e.getMessage());
-        } finally {
-            carregarTabela();
+        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja adicionar o produto?");
+        if (confirmacao){
+            try {
+                Produto produto = new Produto();
+                produto.setNome(textNome.getText());
+                produto.setCategoria(textCategoria.getText());
+                produto.setPreco(Double.parseDouble(textPreco.getText()));
+                produto.setQuantidade(Integer.parseInt(textQtd.getText()));
+                produto.setValidade(dataValidade.getValue());
+                DaoFactory.createProdutoDao().inserir(produto);
+            } catch (Exception e) {
+                System.out.println("Erro ao adicionar o produto: " + e.getMessage());
+            } finally {
+                carregarTabela();
+            }
         }
+
     }
 
     @FXML
     private void removerProduto() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmação de Remoção");
-        alert.setHeaderText("Remover Produto");
-        alert.setContentText("Deseja realmente remover o produto?");
+        boolean confirmacao = ConfirmationDialog.show(stage, "Tem certeza que deseja remover o produto?");
 
-        ButtonType buttonTypeSim = new ButtonType("Sim");
-        ButtonType buttonTypeNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(buttonTypeSim, buttonTypeNao);
-
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == buttonTypeSim) {
+        if (confirmacao) {
             try {
                 int id = Integer.parseInt(textId.getText());
                 DaoFactory.createProdutoDao().removerPorId(id);
@@ -148,6 +140,8 @@ public class ProdutoController {
             } catch (Exception e) {
                 System.out.println("Erro ao remover o produto: " + e.getMessage());
             }
+        } else {
+            System.out.println("Remoção cancelada pelo usuário.");
         }
         
     }

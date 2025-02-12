@@ -7,5 +7,5 @@ import java.util.List;
 public interface VendaDao {
     List<Venda> listaVendas();
     void inserir(Venda venda);
-    void deletar(Venda venda);
+
 }
